@@ -90,6 +90,11 @@ export function InitializePromise({ nonce }: InitializePromiseProps) {
     new Promise<void>((resolve) => {
       let searchReceived = false;
       let recommendReceived = false;
+
+      search.mainHelper!.derivedHelpers[0].once('error', () => {
+        resolve();
+      });
+      
       search.mainHelper!.derivedHelpers[0].once('result', () => {
         searchReceived = true;
         if (!search._hasRecommendWidget || recommendReceived) {
